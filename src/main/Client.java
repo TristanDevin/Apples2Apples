@@ -6,6 +6,7 @@ import java.util.*;
 
 import cards.*;
 import game.Displayer;
+import player.Hand;
 import player.Player;
 import utils.Network;
 
@@ -31,7 +32,7 @@ public class Client {
         System.out.println("You are connected to the server as player: " + id);
         this.nbPlayers = com.getInt();
         System.out.println("Waiting for all players to connect...");
-        this.me.hand = com.getCards(7);
+        this.me.hand = (Hand) com.getCards(7);
         System.out.println("All players are connected ! Game will start soon");
         // When we receive our hand, it means the game is starting, therefore we can
         // play
@@ -101,8 +102,8 @@ public class Client {
 
     }
 
-    public ArrayList<Card> updateHand() {
-        ArrayList<Card> hand = com.getCards(7);
+    public Hand updateHand() {
+        Hand hand = (Hand) com.getCards(7);
         return hand;
     }
 

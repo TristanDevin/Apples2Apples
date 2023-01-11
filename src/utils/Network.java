@@ -10,12 +10,6 @@ public class Network {
     public ObjectInputStream in;
     public ObjectOutputStream out;
 
-    public Network(ObjectInputStream in, ObjectOutputStream out) {
-        this.in = in;
-        this.out = out;
-
-    }
-
     public Network(Socket connSocket) throws IOException {
         this.out = new ObjectOutputStream(connSocket.getOutputStream());
         this.in = new ObjectInputStream(connSocket.getInputStream());

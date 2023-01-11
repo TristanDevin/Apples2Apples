@@ -34,4 +34,16 @@ public class Deck extends ArrayList<Card> {
     public void shuffle() {
         Collections.shuffle(this);
     }
+
+    public Card draw() {
+        return this.remove(0);
+    }
+
+    public ArrayList<Card> drawMany(int nb) {
+        ArrayList<Card> cards = new ArrayList<Card>();
+        for (int i = 0; i < nb; i++) {
+            cards.add(this.remove(0));
+        }
+        return cards;
+    }
 }

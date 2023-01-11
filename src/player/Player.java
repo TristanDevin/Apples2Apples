@@ -9,7 +9,7 @@ import java.util.*;
 
 public class Player {
     public int id;
-    public ArrayList<Card> hand;
+    public Hand hand;
     public ArrayList<GreenApple> points;
     public boolean isJudge = false;
     public boolean isBot = true;
@@ -20,14 +20,14 @@ public class Player {
     public Player(int id) {
         this.id = id;
         points = new ArrayList<GreenApple>(); // This array represents the points the player has
-        this.hand = new ArrayList<Card>();
+        this.hand = new Hand();
     }
 
     public Player(int id, Socket conn) { // With a connection socket, therefore is a human
         this.id = id;
         this.isBot = false;
         points = new ArrayList<GreenApple>(); // This array represents the points the player has
-        this.hand = new ArrayList<Card>();
+        this.hand = new Hand();
         try {
             this.com = new Network(conn);
         } catch (Exception e) {
@@ -43,17 +43,4 @@ public class Player {
         else
             return com;
     }
-
-    public void addCard(Card card) {
-        hand.add(card);
-    }
-
-    public void removeCard(Card card) {
-        hand.remove(card);
-    }
-
-    public void addPoint(GreenApple point) {
-        points.add(point);
-    }
-
 }

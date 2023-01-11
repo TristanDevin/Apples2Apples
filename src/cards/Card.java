@@ -3,7 +3,7 @@ package cards;
 import java.io.Serializable;
 
 public abstract class Card implements Serializable {
-    public String text;
+         String text;
 
     public Card(String text) {
         this.text = text;

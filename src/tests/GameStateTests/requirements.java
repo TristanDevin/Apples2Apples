@@ -23,6 +23,7 @@ public class requirements {
         for (int i = 0; i < nbPlayers; i++) {
             game.players.add(new Player(i + 1));
         }
+        game.initGame();  
         return game;
     }
 
@@ -57,7 +58,6 @@ public class requirements {
     @Test
     public void requirement3() {
         Game game = gameSetup(4);
-        game.initGame();
         Deck greenAppleDeck = DeckFactory.createDeck(
                 "C:/Users/User/Desktop/INSA/INSA4TC/S1Erasmus/SoftwareEngineering/reexam/mycode/greenApple.txt",
                 "green");
@@ -77,7 +77,6 @@ public class requirements {
     @Test
     public void requirement4() {
         Game game = gameSetup(4);
-        game.initGame();
         for (int i = 0; i < game.players.size(); i++) {
             assertEquals(7, game.players.get(i).hand.size());
         }
@@ -87,7 +86,6 @@ public class requirements {
     public void requirement5() {
         // We test that at least once, the judge isnt the same player
         Game game = gameSetup(4);
-        game.initGame();
         game.chooseRdnJudge();
         int judge1 = game.getJudge();
         int judge2;
@@ -99,12 +97,56 @@ public class requirements {
     }
 
     @Test
-    public void requirement6f() {
-        // It makes no sense to test this with bots, so we test it with a human player,
-        // and set up a connection   
+    public void requirement6(){
+        // We will create fake networks, that will read that a greenApple has indeed been sent
+      
+        }
+    
+
+    public void requirement7(){
+        Game game = gameSetup(4);
+        game.waitForPlayers();
+        
+
     }
 
-    public void requirement
+    @Test
+    public void requirement13() {
+        Game game = gameSetup(4);
+        game.chooseRdnJudge();
+        int judge1 = game.getJudge();
+        game.chooseNewJudge();
+        int judge2 = game.getJudge();
+        System.out.println(judge1 + " " + judge2);
+        if (judge1 == 4) {
+            assertEquals(1, judge2);
+        } else {
+            assertEquals(judge1 + 1, judge2);
+        }
 
+    }
+
+    @Test
+    public void requirement14() {
+        // I guess we wll do this by saving the first card of the greenAppleDeck
+        // Then make a player win a round
+        // Then checking that it is the same card
+        Game game = gameSetup(4);
+        Card firstCard = game.greenAppleDeck.get(0);
+        HashMap<Integer, Card> cards = game.waitForPlayers();
+        game.showTurnWinner(1, cards);
+        assertEquals(firstCard, game.players.get(0).points.get(0));
+    }
+
+    @Test
+    public void requirement15() {
+        for (int i = 4; i <= 8; i++) {
+            Game game = gameSetup(i);
+                for (int j = 0; j < 12 - i; j++) {
+                game.players.get(0).points.add(new GreenApple("whatever"));
+            }
+            assertFalse(game.checkIsNotOver(game.pointsToWin()));
+        }
+    }
 
 }

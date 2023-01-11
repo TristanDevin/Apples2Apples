@@ -11,15 +11,12 @@ public class Game {
     public Deck greenAppleDeck;
     public Deck redAppleDeck;
     public ArrayList<Player> players;
-    public Displayer display;
-    public ExecutorService threadPool;
+    private ExecutorService threadPool;
 
     public Game(String redAppleFile, String greenAppleFile, ArrayList<Player> players) {
         this.greenAppleDeck = DeckFactory.createDeck(greenAppleFile, "green");
         this.redAppleDeck = DeckFactory.createDeck(redAppleFile, "red");
-        this.display = new Displayer();
         this.players = players;
-
     }
 
     public void initGame() {
@@ -90,7 +87,7 @@ public class Game {
     }
 
     public void chooseNewJudge() {
-        int currentJudge = getJudge();
+        int currentJudge = getJudge() - 1; // We get the id of the current judge, -1 because the id starts at 1
         this.players.get(currentJudge).isJudge = false;
         if (currentJudge == this.players.size() - 1) {
             this.players.get(0).isJudge = true;
@@ -128,17 +125,15 @@ public class Game {
                 } else {
                     if (p.id == turnWinner) {
                         p.com.sendString("winner");
-                        p.com.sendCard(greenAppleDeck.get(0));
                         p.points.add((GreenApple) greenAppleDeck.get(0));
-                        greenAppleDeck.remove(0);
+                        p.com.sendCard(greenAppleDeck.draw());
                     } else {
                         p.com.sendString("loser");
                         p.com.sendString("Player " + turnWinner + " has won this turn, with the card" + winningCard);
                     }
                 }
             } else if (p.id == turnWinner) {
-                p.points.add((GreenApple) greenAppleDeck.get(0));
-                greenAppleDeck.remove(0);
+                p.points.add((GreenApple) greenAppleDeck.draw());
             }
         }
         System.out.println("Player " + turnWinner + " has won this turn");
@@ -147,7 +142,7 @@ public class Game {
     public void sendGreenApple() {
         for (Player p : this.players) {
             if (!p.isBot) {
-                p.com.sendCard(greenAppleDeck.get(0));
+                p.com.sendCard(greenAppleDeck.get(0)); //We do not remove yet, we will when we send it to the best player.d
             }
         }
     }
@@ -180,7 +175,7 @@ public class Game {
     }
 
     public HashMap<Integer, Card> waitForPlayers() {
-        this.threadPool = Executors.newFixedThreadPool(players.size());
+        this.threadPool = Executors.newFixedThreadPool(players.size() - 1);
         HashMap<Integer, Card> playedCards = new HashMap<>();
         // We need to make sure that every player can play at the same time
         // We create an array of players without the judge, so we dont create a unused
