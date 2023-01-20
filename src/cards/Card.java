@@ -9,6 +9,10 @@ public abstract class Card implements Serializable {
         this.text = text;
     }
 
+    
+    /** 
+     * @return String
+     */
     public String toString() {
         return text;
     }

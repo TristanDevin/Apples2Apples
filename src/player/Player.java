@@ -9,7 +9,7 @@ import java.util.*;
 
 public class Player {
     public int id;
-    public Hand hand;
+    public ArrayList<Card> hand;
     public ArrayList<GreenApple> points;
     public boolean isJudge = false;
     public boolean isBot = true;
@@ -20,7 +20,7 @@ public class Player {
     public Player(int id) {
         this.id = id;
         points = new ArrayList<GreenApple>(); // This array represents the points the player has
-        this.hand = new Hand();
+        this.hand = new ArrayList<Card>();
     }
 
     public Player(int id, Socket conn) { // With a connection socket, therefore is a human
@@ -37,10 +37,38 @@ public class Player {
         System.out.println("Player " + id + " created");
     }
 
+    
+    /** 
+     * @return Network
+     */
     public Network getCom() {
         if (isBot)
             return null; // If the player is a bot, there is no connection
         else
             return com;
     }
+
+    
+    /** 
+     * @param card
+     */
+    public void addCard(Card card) {
+        this.hand.add(card);
+    }
+
+    
+    /** 
+     * @param card
+     */
+    public void removeCard(Card card) { 
+        for (Card c : this.hand) {
+            if (c.equals(card)) {
+                this.hand.remove(c);
+                break;
+            }
+        }
+    }
+
+
+
 }

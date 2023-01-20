@@ -60,6 +60,10 @@ public class Game {
 
     }
 
+    
+    /** 
+     * @param playedCards
+     */
     public void sendCardsToPlayers(HashMap<Integer, Card> playedCards) {
         Collection<Card> values = playedCards.values();
         ArrayList<Card> played = new ArrayList<>(values);
@@ -115,6 +119,11 @@ public class Game {
         }
     }
 
+    
+    /** 
+     * @param turnWinner
+     * @param playedCards
+     */
     public void showTurnWinner(int turnWinner, HashMap<Integer, Card> playedCards) {
         Card winningCard = playedCards.get(turnWinner);
         // First we see who won the game
@@ -142,11 +151,16 @@ public class Game {
     public void sendGreenApple() {
         for (Player p : this.players) {
             if (!p.isBot) {
-                p.com.sendCard(greenAppleDeck.get(0)); //We do not remove yet, we will when we send it to the best player.d
+                p.com.sendCard(greenAppleDeck.get(0)); // We do not remove yet, we will att the end of the turn
             }
         }
     }
 
+    
+    /** 
+     * @param pointsToWin
+     * @return boolean
+     */
     public boolean checkIsNotOver(int pointsToWin) {
         for (Player p : this.players) {
             System.out.println("Player " + p.id + " has " + p.points.size() + " points");
@@ -159,6 +173,10 @@ public class Game {
 
     }
 
+    
+    /** 
+     * @return int
+     */
     public int pointsToWin() {
         switch (players.size()) {
             case 4:
@@ -174,8 +192,12 @@ public class Game {
         }
     }
 
+    
+    /** 
+     * @return HashMap<Integer, Card>
+     */
     public HashMap<Integer, Card> waitForPlayers() {
-        this.threadPool = Executors.newFixedThreadPool(players.size() - 1);
+        this.threadPool = Executors.newFixedThreadPool(players.size());
         HashMap<Integer, Card> playedCards = new HashMap<>();
         // We need to make sure that every player can play at the same time
         // We create an array of players without the judge, so we dont create a unused
@@ -188,6 +210,7 @@ public class Game {
                         if (!p.isBot) {
                             int cardId = p.com.getInt() - 1;
                             playedCards.put(p.id, p.hand.get(cardId));
+                            System.out.println("Player " + p.id + " played" + p.hand.get(cardId));
                             boolean isRemoved = p.hand.remove(p.hand.get(cardId));
                             if (!isRemoved) {
                                 System.out.println("Card not removed");
@@ -218,6 +241,11 @@ public class Game {
         return null;
     }
 
+    
+    /** 
+     * @param playedCards
+     * @return int
+     */
     public int judgeTurn(HashMap<Integer, Card> playedCards) {
         Collection<Card> values = playedCards.values();
         ArrayList<Card> played = new ArrayList<>(values);
@@ -259,6 +287,10 @@ public class Game {
         }
     }
 
+    
+    /** 
+     * @return int
+     */
     public int getWinner() {
         int winnerId = -1;
         for (Player p : this.players) {
@@ -269,6 +301,10 @@ public class Game {
         return winnerId;
     }
 
+    
+    /** 
+     * @return int
+     */
     public int getJudge() {
         for (Player p : this.players) {
             if (p.isJudge) {
@@ -278,6 +314,12 @@ public class Game {
         return -1;
     }
 
+    
+    /** 
+     * @param hm
+     * @param value
+     * @return int
+     */
     public static int getIdFromCard(HashMap<Integer, Card> hm, Card value) {
         for (int i : hm.keySet()) {
             if (hm.get(i).equals(value)) {

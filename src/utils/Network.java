@@ -5,6 +5,7 @@ import java.net.*;
 import java.util.ArrayList;
 
 import cards.Card;
+import player.Hand;
 
 public class Network {
     public ObjectInputStream in;
@@ -15,6 +16,10 @@ public class Network {
         this.in = new ObjectInputStream(connSocket.getInputStream());
     }
 
+    
+    /** 
+     * @return int
+     */
     public int getInt() {
         try {
             return in.readInt();
@@ -25,6 +30,10 @@ public class Network {
         }
     }
 
+    
+    /** 
+     * @param i
+     */
     public void sendInt(int i) {
         try {
             out.writeInt(i);
@@ -34,6 +43,10 @@ public class Network {
         }
     }
 
+    
+    /** 
+     * @param cards
+     */
     public void sendCards(ArrayList<Card> cards) {
         for (Card c : cards) {
             try {
@@ -45,6 +58,11 @@ public class Network {
         }
     }
 
+    
+    /** 
+     * @param nbCards
+     * @return ArrayList<Card>
+     */
     public ArrayList<Card> getCards(int nbCards) {
         ArrayList<Card> cards = new ArrayList<Card>();
         try {
@@ -59,6 +77,10 @@ public class Network {
         }
     }
 
+    
+    /** 
+     * @param c
+     */
     public void sendCard(Card c) {
         try {
             out.writeObject(c);
@@ -68,6 +90,10 @@ public class Network {
         }
     }
 
+    
+    /** 
+     * @return Card
+     */
     public Card getCard() {
         try {
             return (Card) in.readObject();
@@ -77,6 +103,10 @@ public class Network {
         }
     }
 
+    
+    /** 
+     * @return String
+     */
     public String getString() {
         try {
             return (String) in.readObject();
@@ -86,6 +116,10 @@ public class Network {
         }
     }
 
+    
+    /** 
+     * @param s
+     */
     public void sendString(String s) {
         try {
             out.writeObject(s);
@@ -94,6 +128,10 @@ public class Network {
             System.out.println("Could not send string");
         }
     }
+
+  
+
+   
 
     public void close() {
         try {

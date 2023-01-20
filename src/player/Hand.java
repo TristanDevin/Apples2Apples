@@ -10,10 +10,18 @@ public class Hand extends ArrayList<Card> {
         super();
     }
 
+    
+    /** 
+     * @param card
+     */
     public void addCard(Card card) {
         this.add(card);
     }
 
+    
+    /** 
+     * @param card
+     */
     public void removeCard(Card card) {
         this.remove(card);
     }

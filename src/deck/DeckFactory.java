@@ -5,6 +5,12 @@ public class DeckFactory {
     public DeckFactory() {
     }
 
+    
+    /** 
+     * @param file
+     * @param type
+     * @return Deck
+     */
     public static Deck createDeck(String file, String type) {
         switch (type) {
             case "red":

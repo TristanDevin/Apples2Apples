@@ -9,6 +9,10 @@ public class Displayer {
     public Displayer() {
     }
 
+    
+    /** 
+     * @param winner
+     */
     public void displayLostGame(String winner) {
         System.out.println("");
         System.out.println("*****************************************************");
@@ -26,6 +30,10 @@ public class Displayer {
         System.out.println("**    CONGRATULATIONS, YOU HAVE WON THE GAME !     **");
     }
 
+    
+    /** 
+     * @param hand
+     */
     public void displayHand(ArrayList<Card> hand) {
         System.out.println("");
         for (int i = 0; i < hand.size(); i++) {
@@ -34,11 +42,19 @@ public class Displayer {
         }
     }
 
+    
+    /** 
+     * @param greenApple
+     */
     public void displayGreenApple(Card greenApple) {
         System.out.println("");
         System.out.println("Green Apple : " + greenApple);
     }
 
+    
+    /** 
+     * @param playedCards
+     */
     public void displayPlayedCards(ArrayList<Card> playedCards) {
         System.out.println("The cards played are: ");
         System.out.println("");
@@ -48,11 +64,19 @@ public class Displayer {
         }
     }
 
+    
+    /** 
+     * @param winner
+     */
     public void displayWinner(int winner) {
         System.out.println("");
         System.out.println("The winner is player " + winner);
     }
 
+    
+    /** 
+     * @param judge
+     */
     public void displayNewTurn(boolean judge) {
         System.out.println("");
         System.out.println("*****************************************************");

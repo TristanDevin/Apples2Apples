@@ -4,16 +4,15 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
-
 import game.Game;
 import player.*;
 
 public class Server {
-    public ArrayList<Player> playerList;
-    public ServerSocket sSocket;
-    public String redAppleFile;
-    public String greenAppleFile;
-    public int players;
+    private ArrayList<Player> playerList;
+    private ServerSocket sSocket;
+    private String redAppleFile;
+    private String greenAppleFile;
+    private int players;
 
     public Server(String ip, int port, int players, int humans, String redAppleFile, String greenAppleFile) {
         this.playerList = new ArrayList<Player>();
@@ -31,6 +30,10 @@ public class Server {
 
     }
 
+    
+    /** 
+     * @param humanPlayers
+     */
     public void queue(int humanPlayers) {
         for (int i = players - humanPlayers; i < players; i++) {
             Socket human;
@@ -64,6 +67,11 @@ public class Server {
         }
     }
 
+    
+    /** 
+     * @param players
+     * @param humans
+     */
     public void addBots(int players, int humans) {
         for (int i = 0; i < players - humans; i++) {
             this.playerList.add(new Player(i + 1));

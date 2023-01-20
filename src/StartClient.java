@@ -1,12 +1,15 @@
-import java.io.IOException;
 
 import main.Client;
 
 public class StartClient {
+    private static String ip = "127.0.0.1";
+    private static int port = 9876;
 
+    
+    /** 
+     * @param args
+     */
     public static void main(String[] args) {
-        String ip = "127.0.0.1";
-        int port = 9876;
 
         switch (args.length) {
 
@@ -26,12 +29,9 @@ public class StartClient {
                 port = Integer.parseInt(args[1]);
                 if (port > 0) {
                     System.out.println("Connecting to server");
-                    Client c2 = new Client(ip, port);
-                    // Now we try to connect to the server
-
+                    Client c2 = new Client(ip, port);       
                     System.out.println("Connection successful ! Game will start as soon as everyone is connected");
                     c2.queue();
-
                 }
                 break;
 

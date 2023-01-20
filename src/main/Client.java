@@ -11,12 +11,13 @@ import player.Player;
 import utils.Network;
 
 public class Client {
-    public String ip;
-    public int port;
-    public Player me;
-    public Network com;
-    public Displayer display;
-    public int nbPlayers;
+    private String ip;
+    private int port;
+    private Player me;
+    private Network com;
+    private Displayer display;
+    private int nbPlayers;
+    private final int MAX_HAND_SIZE = 7;
 
     public Client(String ip, int port) {
         this.ip = ip;
@@ -32,7 +33,7 @@ public class Client {
         System.out.println("You are connected to the server as player: " + id);
         this.nbPlayers = com.getInt();
         System.out.println("Waiting for all players to connect...");
-        this.me.hand = (Hand) com.getCards(7);
+        this.me.hand = com.getCards(MAX_HAND_SIZE);
         System.out.println("All players are connected ! Game will start soon");
         // When we receive our hand, it means the game is starting, therefore we can
         // play
@@ -40,6 +41,11 @@ public class Client {
 
     }
 
+    
+    /** 
+     * @param ip
+     * @param port
+     */
     public void connectToServer(String ip, int port) {
         try {
             Socket conn = new Socket("127.0.0.1", port);
@@ -102,8 +108,13 @@ public class Client {
 
     }
 
-    public Hand updateHand() {
-        Hand hand = (Hand) com.getCards(7);
+    
+    /** 
+     * @return ArrayList<Card>
+     */
+    public ArrayList<Card> updateHand() {
+        ArrayList<Card> hand = new ArrayList<Card>(MAX_HAND_SIZE);
+        hand = com.getCards(MAX_HAND_SIZE);
         return hand;
     }
 
@@ -111,10 +122,14 @@ public class Client {
         System.out.println("Choose a card to play");
         int card = inputInt(1, this.me.hand.size());
         com.sendInt(card);
-        System.out.println("You sent card: " + card);
         this.me.hand.remove(card - 1);
+
     }
 
+    
+    /** 
+     * @param playedCards
+     */
     public void chooseTurnWinner(ArrayList<Card> playedCards) {
         display.displayPlayedCards(playedCards);
         System.out.println("Choose the winner of this turn\n");
@@ -124,12 +139,22 @@ public class Client {
 
     }
 
+    
+    /** 
+     * @return ArrayList<Card>
+     */
     public ArrayList<Card> waitForPlayers() {
         ArrayList<Card> playedCards = com.getCards(this.nbPlayers - 1); // We expect to receive nbPlayers - 1 card,
                                                                         // since we are not playing
         return playedCards;
     }
 
+    
+    /** 
+     * @param min
+     * @param max
+     * @return int
+     */
     public int inputInt(int min, int max) {
         Scanner sc = new Scanner(System.in);
         int input = 0;

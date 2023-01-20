@@ -66,6 +66,10 @@ class Player {
 		}
 	}
 
+	
+	/** 
+	 * @return PlayedApple
+	 */
 	public PlayedApple judge() {
 		if(isBot){
 			return Apples2Apples.playedApple.get(0);
@@ -90,6 +94,10 @@ class Player {
 		}
 	}
 
+	
+	/** 
+	 * @param redApple
+	 */
 	public void addCard(String redApple) {
 		if(isBot || !online) {
 			hand.add(redApple);

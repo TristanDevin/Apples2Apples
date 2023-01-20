@@ -10,6 +10,11 @@ public class FileReader {
     public FileReader() {
     }
 
+    
+    /** 
+     * @param filepath
+     * @return ArrayList<String>
+     */
     public ArrayList<String> scan(String filepath) {
         ArrayList<String> text = new ArrayList<String>();
 

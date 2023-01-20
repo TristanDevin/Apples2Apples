@@ -1,17 +1,24 @@
 package deck;
 
-import java.io.*;
 import java.util.*;
 
 import cards.*;
 import utils.FileReader;
 
-public class Deck extends ArrayList<Card> {
+
+//Extending ArrayList<Card> to create a deck of cards
+
+public class Deck extends ArrayList<Card>{
 
     public Deck(String file, String type) {
         createDeck(file, type);
     }
 
+    
+    /** 
+     * @param file
+     * @param type
+     */
     public void createDeck(String file, String type) {
 
         FileReader fr = new FileReader();
@@ -35,10 +42,19 @@ public class Deck extends ArrayList<Card> {
         Collections.shuffle(this);
     }
 
+    
+    /** 
+     * @return Card
+     */
     public Card draw() {
         return this.remove(0);
     }
 
+    
+    /** 
+     * @param nb
+     * @return ArrayList<Card>
+     */
     public ArrayList<Card> drawMany(int nb) {
         ArrayList<Card> cards = new ArrayList<Card>();
         for (int i = 0; i < nb; i++) {
